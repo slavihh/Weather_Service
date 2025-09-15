@@ -7,15 +7,13 @@ on:
         branches: [ "master" ]
 
 jobs:
-    php:
+    codestyle:
         runs-on: ubuntu-latest
 
         steps:
-            # Checkout code
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            # Setup PHP 8.3
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -23,12 +21,10 @@ jobs:
                   extensions: mbstring, intl, pdo_mysql, redis
                   coverage: none
 
-            # Get Composer cache directory
             - name: Get Composer cache directory
               id: composer-cache
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-            # Cache Composer dependencies
             - name: Cache Composer dependencies
               uses: actions/cache@v3
               with:
@@ -36,14 +32,11 @@ jobs:
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
                   restore-keys: ${{ runner.os }}-composer-
 
-            # Install dependencies
             - name: Install dependencies
               run: composer install --no-progress --no-interaction --prefer-dist
 
-            # Run PHP-CS-Fixer (dry-run so it fails if formatting is wrong)
             - name: Run PHP-CS-Fixer
               run: vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --diff --verbose
 
-            # Run PHPStan
             - name: Run PHPStan
               run: vendor/bin/phpstan analyse --memory-limit=1G
