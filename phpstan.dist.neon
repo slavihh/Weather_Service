@@ -3,4 +3,5 @@ parameters:
     paths:
         - bin/
         - config/
+        - tests/
         - src/
