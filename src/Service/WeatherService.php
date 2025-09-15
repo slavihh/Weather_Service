@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Provider\ExternalProviderInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -55,7 +56,6 @@ final class WeatherService
             'lastTimeUpdated' => (new \DateTimeImmutable())->format(self::DATETIME_FORMAT),
             'history' => $history,
         ]);
-        $cacheItem->expiresAfter(3600);
         $this->cache->save($cacheItem);
 
         return $this->formatWithTrend($cacheItem->get());

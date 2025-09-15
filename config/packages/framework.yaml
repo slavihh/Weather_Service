@@ -3,8 +3,8 @@ framework:
     secret: '%env(APP_SECRET)%'
     http_client:
         scoped_clients:
-            openWeatherClient:
-                base_uri: '%env(resolve:OPEN_WEATHER_API)%?appid=%env(resolve:OPEN_WEATHER_API_KEY)%'
+            open_weather.client:
+                base_uri: '%env(resolve:OPEN_WEATHER_API)%'
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
