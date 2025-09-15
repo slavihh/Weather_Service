@@ -55,7 +55,7 @@ final class WeatherService
         }
 
         $currentTemp = $tempResponse->getTemperature();
-        if ($currentTemp === null) {
+        if (null === $currentTemp) {
             throw new \RuntimeException('Provider returned null temperature');
         }
 

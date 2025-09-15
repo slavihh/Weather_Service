@@ -33,10 +33,10 @@ final class WeatherServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->externalProvider   = $this->createMock(ExternalProviderInterface::class);
-        $this->cache              = $this->createMock(CacheItemPoolInterface::class);
-        $this->cacheItem          = $this->createMock(CacheItemInterface::class);
-        $this->historyRepository  = $this->createMock(WeatherHistoryRepositoryInterface::class);
+        $this->externalProvider = $this->createMock(ExternalProviderInterface::class);
+        $this->cache = $this->createMock(CacheItemPoolInterface::class);
+        $this->cacheItem = $this->createMock(CacheItemInterface::class);
+        $this->historyRepository = $this->createMock(WeatherHistoryRepositoryInterface::class);
 
         $this->weatherService = new WeatherService(
             $this->externalProvider,
@@ -141,7 +141,7 @@ final class WeatherServiceTest extends TestCase
         $response->setIsSuccess($success);
         $response->setStatusCode($statusCode);
 
-        if ($temp !== null) {
+        if (null !== $temp) {
             $response->setTemperature($temp);
         }
 
