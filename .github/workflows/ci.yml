@@ -19,7 +19,7 @@ jobs:
               with:
                   php-version: '8.3'
                   extensions: mbstring, intl, pdo_mysql, redis
-                  coverage: none
+                  coverage: xdebug
 
             - name: Get Composer cache directory
               id: composer-cache
@@ -45,7 +45,7 @@ jobs:
               run: vendor/bin/phpunit tests --coverage-clover=coverage.xml --log-junit=phpunit-report.xml
 
             - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@master
+              uses: SonarSource/sonarcloud-github-action@ba3875ecf642b2129de2b589510c81a8b53dbf4e
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
