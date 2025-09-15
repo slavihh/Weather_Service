@@ -42,7 +42,7 @@ jobs:
 
             # Run PHP-CS-Fixer (dry-run so it fails if formatting is wrong)
             - name: Run PHP-CS-Fixer
-              run: vendor/bin/php-cs-fixer fix --dry-run --allow-risky --diff --verbose
+              run: vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --diff --verbose
 
             # Run PHPStan
             - name: Run PHPStan
