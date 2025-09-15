@@ -7,7 +7,7 @@ on:
         branches: [ "master" ]
 
 jobs:
-    codestyle:
+    checks:
         runs-on: ubuntu-latest
 
         steps:
@@ -19,7 +19,7 @@ jobs:
               with:
                   php-version: '8.3'
                   extensions: mbstring, intl, pdo_mysql, redis
-                  coverage: none
+                  coverage: xdebug
 
             - name: Get Composer cache directory
               id: composer-cache
@@ -40,13 +40,6 @@ jobs:
 
             - name: Run PHPStan
               run: vendor/bin/phpstan analyse --memory-limit=1G
-    phpunit:
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v4
-            -   uses: shivammathur/setup-php@v2
-                with:
-                    php-version: '8.3'
-                    coverage: xdebug
-            -   run: composer install --prefer-dist --no-progress
-            -   run: vendor/bin/phpunit --coverage-text
+
+            - name: Run PHPUnit with coverage
+              run: vendor/bin/phpunit tests --coverage-clover=coverage.xml --log-junit=phpunit-report.xml
