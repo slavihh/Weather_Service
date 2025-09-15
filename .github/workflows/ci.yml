@@ -42,10 +42,7 @@ jobs:
               run: vendor/bin/phpstan analyse --memory-limit=1G
 
             - name: Run PHPUnit with coverage
-              run: vendor/bin/phpunit --coverage-clover=coverage.xml --log-junit=phpunit-report.xml
-
-            - name: Run PHPStan
-              run: vendor/bin/phpstan analyse --no-progress
+              run: vendor/bin/phpunit tests --coverage-clover=coverage.xml --log-junit=phpunit-report.xml
 
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
