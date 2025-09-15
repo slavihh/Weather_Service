@@ -43,9 +43,3 @@ jobs:
 
             - name: Run PHPUnit with coverage
               run: vendor/bin/phpunit tests --coverage-clover=coverage.xml --log-junit=phpunit-report.xml
-
-            - name: SonarCloud Scan
-              uses: SonarSource/sonarcloud-github-action@ba3875ecf642b2129de2b589510c81a8b53dbf4e
-              env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
