@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\Entity\WeatherHistory;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class WeatherControllerTest extends WebTestCase
@@ -26,7 +27,7 @@ final class WeatherControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $entityManager = static::getContainer()->get('doctrine')->getManager();
+        $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $weather = new WeatherHistory('Sofia', 'BG', 23.2);
         $entityManager->persist($weather);
         $entityManager->flush();
