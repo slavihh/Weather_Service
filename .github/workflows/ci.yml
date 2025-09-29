@@ -14,23 +14,19 @@ jobs:
             postgres:
                 image: postgres:15
                 env:
-                    POSTGRES_USER: test_user
-                    POSTGRES_PASSWORD: test_password
+                    POSTGRES_USER: app
+                    POSTGRES_PASSWORD: app_password
                     POSTGRES_DB: test_db
                 ports:
                     - 5432:5432
                 options: >-
-                    --health-cmd="pg_isready -U test_user -d test_db"
+                    --health-cmd="pg_isready -U app -d test_db"
                     --health-interval=10s
                     --health-timeout=5s
                     --health-retries=5
 
         env:
-            DB_HOST: localhost
-            DB_PORT: 5432
-            DB_NAME: test_db
-            DB_USER: test_user
-            DB_PASS: test_password
+            DATABASE_URL: "postgresql://app:app_password@localhost:5432/test_db"
 
         steps:
             - name: Checkout repository
