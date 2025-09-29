@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Repository\WeatherHistoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: WeatherHistoryRepository::class)]
 #[ORM\Table(name: 'weather_history')]
@@ -13,9 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 class WeatherHistory
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    #[ORM\Column(type: 'uuid', unique: true)]
+    private Uuid $id;
 
     #[ORM\Column(length: 100)]
     private string $city;
@@ -31,13 +31,14 @@ class WeatherHistory
 
     public function __construct(string $city, string $countryCode, float $temperature)
     {
+        $this->id = Uuid::v4();
         $this->city = $city;
         $this->countryCode = \strtoupper($countryCode);
         $this->temperature = $temperature;
         $this->recordedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
@@ -60,5 +61,14 @@ class WeatherHistory
     public function getRecordedAt(): \DateTimeImmutable
     {
         return $this->recordedAt;
+    }
+
+    public static function getTrendSuffix(float $diff): string
+    {
+        return match (true) {
+            $diff > 0.5 => '🥵',
+            $diff < -0.5 => '🥶',
+            default => '-',
+        };
     }
 }

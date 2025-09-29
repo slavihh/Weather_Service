@@ -16,10 +16,11 @@ services:
     App\:
         resource: '../src/'
 
-    App\Provider\OpenWeatherProvider:
+    App\Provider\OpenWeather\OpenWeatherProvider:
         arguments:
             $openWeatherClient: '@open_weather.client'
+    App\Provider\OpenWeather\OpenWeatherQueryFactory:
+        arguments:
             $apiKey: '%env(OPEN_WEATHER_API_KEY)%'
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

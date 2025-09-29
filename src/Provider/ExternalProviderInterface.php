@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Provider;
 
-use App\Model\ProviderResponse;
+use App\DTO\ProviderResponse;
 
 interface ExternalProviderInterface
 {
