@@ -27,6 +27,7 @@ final class WeatherControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
+        /** @var EntityManagerInterface $entityManager */
         $entityManager = static::getContainer()->get(EntityManagerInterface::class);
         $weather = new WeatherHistory('Sofia', 'BG', 23.2);
         $entityManager->persist($weather);
