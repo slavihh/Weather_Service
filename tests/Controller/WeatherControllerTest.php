@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Entity\WeatherHistory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class WeatherControllerTest extends WebTestCase
@@ -24,6 +25,11 @@ final class WeatherControllerTest extends WebTestCase
     public function testReturnsWeatherDataWhenValidationSucceeds(): void
     {
         $client = static::createClient();
+
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+        $weather = new WeatherHistory('Sofia', 'BG', 23.2);
+        $entityManager->persist($weather);
+        $entityManager->flush();
 
         $client->request('GET', '/weather', [
             'city' => 'Sofia',
