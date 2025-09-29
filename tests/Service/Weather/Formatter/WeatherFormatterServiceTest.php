@@ -6,7 +6,6 @@ namespace App\Tests\Service\Weather\Formatter;
 
 use App\Repository\WeatherHistoryRepositoryInterface;
 use App\Service\Weather\Formatter\WeatherFormatterService;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -21,8 +20,7 @@ final class WeatherFormatterServiceTest extends TestCase
         $this->repo = $this->createMock(WeatherHistoryRepositoryInterface::class);
     }
 
-    #[Test]
-    public function formatsWithNeutralTrendWhenNoHistory(): void
+    public function testFormatsWithNeutralTrendWhenNoHistory(): void
     {
         $this->repo->method('findLastForCity')->willReturn([]);
 
@@ -32,8 +30,7 @@ final class WeatherFormatterServiceTest extends TestCase
         $this->assertSame('20 -', $result);
     }
 
-    #[Test]
-    public function formatsWithNeutralTrendWhenOnlyOneHistoryRecord(): void
+    public function testFormatsWithNeutralTrendWhenOnlyOneHistoryRecord(): void
     {
         $this->repo->method('findLastForCity')->willReturn([['temp' => 19.0]]);
 
@@ -43,8 +40,7 @@ final class WeatherFormatterServiceTest extends TestCase
         $this->assertSame('20 -', $result);
     }
 
-    #[Test]
-    public function formatsWithHotTrendWhenTempAboveAverage(): void
+    public function testFormatsWithHotTrendWhenTempAboveAverage(): void
     {
         $this->repo->method('findLastForCity')->willReturn([
             ['temp' => 18.0],
@@ -58,8 +54,7 @@ final class WeatherFormatterServiceTest extends TestCase
         $this->assertSame('25 🥵', $result);
     }
 
-    #[Test]
-    public function formatsWithColdTrendWhenTempBelowAverage(): void
+    public function testFormatsWithColdTrendWhenTempBelowAverage(): void
     {
         $this->repo->method('findLastForCity')->willReturn([
             ['temp' => 25.0],
@@ -73,8 +68,7 @@ final class WeatherFormatterServiceTest extends TestCase
         $this->assertSame('20 🥶', $result);
     }
 
-    #[Test]
-    public function formatsWithNeutralTrendWhenCloseToAverage(): void
+    public function testFormatsWithNeutralTrendWhenCloseToAverage(): void
     {
         $this->repo->method('findLastForCity')->willReturn([
             ['temp' => 20.0],
